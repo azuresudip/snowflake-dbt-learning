@@ -1,0 +1,5 @@
+order_status,status_description,is_final_status
+PROCESSING,Order is being processed,FALSE
+SHIPPED,Order has left the warehouse,FALSE
+DELIVERED,Order was delivered to the customer,TRUE
+CANCELLED,Order was cancelled before completion,TRUE

@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: order_status_codes
+    description: Approved order-status codes and their business descriptions.
+
+    columns:
+      - name: order_status
+        description: Approved order lifecycle status code.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: status_description
+        description: Business-friendly explanation of the order status.
+        data_tests:
+          - not_null
