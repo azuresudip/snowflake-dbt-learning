@@ -1,0 +1,42 @@
+version: '2.0.0'
+
+sources:
+  - name: raw
+    description: Raw source tables loaded into Snowflake for the dbt learning project.
+    database: LEARN_DBT
+    schema: DBT_RAW
+
+    tables:
+        - name: ORDERS
+          description: Raw order records before dbt staging transformations.
+          config:
+           loaded_at_field: updated_at
+           freshness:
+            warn_after: {count: 30, period: hour}
+            error_after: {count: 48, period: hour}
+
+          columns:
+           - name: ORDER_ID
+             data_tests:
+               - not_null
+               - unique
+               
+        - name: PRODUCTS
+          description: Raw product records from the source system.
+
+        - name: CUSTOMERS
+          description: Raw customer records from the source system.
+
+        - name: CUSTOMER_PROFILE
+          description: Mutable customer-profile source used to demonstrate SCD Type 2 snapshots
+          columns:
+          - name: CUSTOMER_ID
+            description: Unique identifier for a customer.
+            data_tests:
+              - not_null
+              - unique
+
+          - name: UPDATED_AT
+            description: Timestamp when the customer profile was last changed.
+            data_tests:
+              - not_null

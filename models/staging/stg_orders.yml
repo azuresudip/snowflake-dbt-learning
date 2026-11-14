@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: >
+      Cleaned staging model for order records from the raw ORDERS source.
+      It contains one row per order and is the standardised input for
+      downstream order transformations.
+
+    columns:
+      - name: order_id
+        description: Unique business identifier for an order.
+        data_tests:
+          - not_null:
+              config:
+                store_failures: false
+
+          - unique:
+              config:
+                store_failures: false
+
+      - name: customer_id
+        description: Identifier of the customer who placed the order.
+        data_tests:
+          - not_null:
+              config:
+                store_failures: false
+
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+              config:
+                store_failures: true
+
+      - name: product_id
+        description: Identifier of the product included in the order.
+
+      - name: order_date
+        description: Business date on which the order was placed.
+
+      - name: quantity
+        description: Number of units ordered.
+
+      - name: order_status
+        description: Current lifecycle status of the order.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['DELIVERED', 'PROCESSING', 'CANCELLED', 'SHIPPED']
+              config:
+                store_failures: true
+
+      - name: total_amount
+        description: Total monetary amount recorded for the order.

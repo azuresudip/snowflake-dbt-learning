@@ -1,0 +1,14 @@
+version: 2
+
+snapshots:
+  - name: customer_profile_snapshot
+    description: Historical SCD Type 2 record of customer-profile changes.
+
+    relation: source('raw', 'CUSTOMER_PROFILE')
+    
+
+    config:
+      schema: snapshots
+      strategy: timestamp
+      unique_key: customer_id
+      updated_at: updated_at
